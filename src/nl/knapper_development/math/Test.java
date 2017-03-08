@@ -18,6 +18,7 @@ package nl.knapper_development.math;
  */
 
 import nl.knapper_development.math.algorithms.BubbleSort;
+import nl.knapper_development.math.algorithms.MergeSort;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,9 +27,10 @@ public class Test {
 
     public static void main(String[] args) {
 
-        ArrayList<Integer> dataSet = new ArrayList<>(Arrays.asList(23,452,12,22,2,1,86,45));
+        ArrayList<Integer> dataSet1 = new ArrayList<>(Arrays.asList(23, 452, 12, 22, 2, 1, 86, 45));
+        ArrayList<Integer> dataSet2 = new ArrayList<>(Arrays.asList(23, 452, 12, 22, 2, 1, 86, 45));
 
-        BubbleSort bs = new BubbleSort(dataSet);
+        BubbleSort bs = new BubbleSort(dataSet1);
         bs.setObserver(new Algorithm.Observer() {
             @Override
             public void onLoop() {
@@ -41,12 +43,32 @@ public class Test {
 
             @Override
             public void onFinished() {
-                System.out.println("DONE");
+                System.out.println("BS DONE\n----------");
             }
         });
 
-        bs.run();
 
+        MergeSort ms = new MergeSort(dataSet2);
+        ms.setObserver(new Algorithm.Observer() {
+            @Override
+            public void onLoop() {
+
+            }
+
+            @Override
+            public void onLoopDone(ArrayList<Integer> currentDataset) {
+                System.out.println(currentDataset);
+            }
+
+            @Override
+            public void onFinished() {
+                System.out.println("MS DONE\n----------");
+            }
+        });
+
+
+        bs.run();
+        ms.run();
     }
 
 }

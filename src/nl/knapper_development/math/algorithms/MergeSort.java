@@ -20,27 +20,64 @@ import java.util.ArrayList;
  */
 public class MergeSort extends Algorithm {
 
-    private int lowest;
-    private int highest;
-    private int pivot;
-
-
+    private ArrayList<ArrayList<Integer>> dataLists;
+    private boolean firstStepDone = false;
+    private int differentListLocation = 0;
 
     public MergeSort(ArrayList<Integer> dataSet) {
         super(dataSet);
-        this.lowest = 0;
-        this.highest = (dataSet.size() -1 );
-        this.pivot = dataSet.get(lowest+((highest-lowest)/2));
+        dataLists = new ArrayList<>();
     }
 
     @Override
     protected ArrayList<Integer> loop(ArrayList<Integer> dataSet) {
 
+        if (dataLists.size() != 0) {
+            if (differentListLocation < dataLists.size()) {
+                ArrayList<Integer> list = dataLists.get(differentListLocation);
+                seperator(list);
+                dataLists.remove(list);
+            }
+        } else {
+            if (!firstStepDone) {
+                seperator(dataSet);
+                firstStepDone = true;
+            }
+            differentListLocation = 0;
+        }
 
+        return mergeAll();
+    }
 
+    private void seperator(ArrayList<Integer> dataset) {
+        ArrayList<Integer> lowerSide = new ArrayList<>();
+        ArrayList<Integer> higherSide = new ArrayList<>();
+        int higestPos = (dataset.size() - 1);
+        int pivot = dataset.get((higestPos) / 2);
 
+        for (int i = 0; i <= higestPos; i++) {
+            int number = dataset.get(i);
+            if (number != pivot) {
+                if (number > pivot) {
+                    higherSide.add(number);
+                } else {
+                    lowerSide.add(number);
+                }
+            }
+        }
+        lowerSide.add(pivot);
+        dataLists.add(lowerSide);
+        dataLists.add(higherSide);
+    }
 
-        return null;
+    private ArrayList<Integer> mergeAll() {
+        ArrayList<Integer> merged = new ArrayList<>();
+
+        for (ArrayList<Integer> list : dataLists) {
+            merged.addAll(list);
+        }
+
+        return merged;
     }
 
 }
