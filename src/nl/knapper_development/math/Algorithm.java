@@ -44,6 +44,12 @@ public abstract class Algorithm {
         onFinished();
     }
 
+    public void swap(ArrayList<Integer> dataSet, int pos1, int pos2){
+        int swap = dataSet.get(pos1);
+        dataSet.set(pos1, dataSet.get(pos2));
+        dataSet.set(pos2, swap);
+    }
+
     public void runWithCondition(Condition condition) {
         this.condition = condition;
         while (!condition.criteria()) {

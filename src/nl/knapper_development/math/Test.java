@@ -29,27 +29,23 @@ public class Test {
         ArrayList<Integer> dataSet = new ArrayList<>(Arrays.asList(23,452,12,22,2,1,86,45));
 
         BubbleSort bs = new BubbleSort(dataSet);
-bs.setObserver(new Algorithm.Observer() {
-    @Override
-    public void onLoop() {
+        bs.setObserver(new Algorithm.Observer() {
+            @Override
+            public void onLoop() {
+            }
 
-    }
+            @Override
+            public void onLoopDone(ArrayList<Integer> currentDataset) {
+                System.out.println(currentDataset);
+            }
 
-    @Override
-    public void onLoopDone(ArrayList<Integer> currentDataset) {
-        System.out.println(currentDataset);
-    }
-
-    @Override
-    public void onFinished() {
-        System.out.println("DONE");
-    }
-});
+            @Override
+            public void onFinished() {
+                System.out.println("DONE");
+            }
+        });
 
         bs.run();
-
-
-
 
     }
 

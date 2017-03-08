@@ -1,11 +1,5 @@
-package nl.knapper_development.math.algorithms;
-
-import nl.knapper_development.math.Algorithm;
-
-import java.util.ArrayList;
-
-/**
- * Copyright (C) 3/8/17 By Joris
+package nl.knapper_development.math.algorithms;/**
+ * Copyright (C) 3/8/17 By joris
  * <p>
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,34 +12,19 @@ import java.util.ArrayList;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-public class BubbleSort extends Algorithm {
 
-    private int loop1 = 0;
-    private int loop2 = 0;
-    private int dataSetSize = 0;
+import nl.knapper_development.math.Algorithm;
 
-    public BubbleSort(ArrayList<Integer> dataSet) {
+import java.util.ArrayList;
+
+public class QuickSort extends Algorithm {
+
+    public QuickSort(ArrayList<Integer> dataSet) {
         super(dataSet);
-        dataSetSize = dataSet.size();
     }
 
     @Override
     protected ArrayList<Integer> loop(ArrayList<Integer> dataSet) {
-
-        if (loop1 < (dataSetSize-1)){
-            if (loop2 < (dataSetSize-loop1-1)){
-                if (dataSet.get(loop2) > dataSet.get(loop2+1)) {
-                    swap(dataSet, loop2, loop2+1);
-                }
-                loop2++;
-            }
-            else {
-                loop2 = 0;
-                loop1++;
-            }
-        }
-        return dataSet;
+        return null;
     }
-
-
 }
