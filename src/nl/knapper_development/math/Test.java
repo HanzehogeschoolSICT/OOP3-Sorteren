@@ -17,6 +17,8 @@ package nl.knapper_development.math;
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import nl.knapper_development.math.algorithms.BubbleSort;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -26,33 +28,28 @@ public class Test {
 
         ArrayList<Integer> dataSet = new ArrayList<>(Arrays.asList(23,452,12,22,2,1,86,45));
 
-        Algorithm algorithm = new Algorithm(dataSet) {
+        BubbleSort bs = new BubbleSort(dataSet);
+bs.setObserver(new Algorithm.Observer() {
+    @Override
+    public void onLoop() {
 
-            @Override
-            protected ArrayList<Integer> loop(ArrayList<Integer> dataSet) {
+    }
 
-                return dataSet;
-            }
-        };
+    @Override
+    public void onLoopDone(ArrayList<Integer> currentDataset) {
+        System.out.println(currentDataset);
+    }
 
-        algorithm.setObserver(new Algorithm.Observer() {
-            @Override
-            public void onLoop() {
+    @Override
+    public void onFinished() {
+        System.out.println("DONE");
+    }
+});
 
-            }
+        bs.run();
 
-            @Override
-            public void onLoopDone(ArrayList<Integer> currentDataset) {
-                System.out.println(currentDataset);
-            }
 
-            @Override
-            public void onFinished() {
 
-            }
-        });
-
-        algorithm.run();
 
     }
 
