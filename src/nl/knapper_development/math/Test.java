@@ -43,7 +43,7 @@ public class Test {
 
             @Override
             public void onFinished() {
-                System.out.println("BS DONE\n----------");
+                System.out.println("BS DONE, " + bs.getComparisons() + "comparisons.\n----------");
             }
         });
 
@@ -62,7 +62,7 @@ public class Test {
 
             @Override
             public void onFinished() {
-                System.out.println("MS DONE\n----------");
+                System.out.println("MS DONE, " + ms.getComparisons() + "comparisons.\n----------");
             }
         });
 

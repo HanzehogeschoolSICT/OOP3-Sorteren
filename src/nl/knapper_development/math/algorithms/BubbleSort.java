@@ -20,8 +20,8 @@ import java.util.ArrayList;
  */
 public class BubbleSort extends Algorithm {
 
-    private int loop1 = 0;
-    private int loop2 = 0;
+    private int sortCounter = 0;
+    private int swapCounter = 0;
     private int dataSetSize = 0;
 
     public BubbleSort(ArrayList<Integer> dataSet) {
@@ -32,16 +32,17 @@ public class BubbleSort extends Algorithm {
     @Override
     protected ArrayList<Integer> loop(ArrayList<Integer> dataSet) {
 
-        if (loop1 < (dataSetSize-1)){
-            if (loop2 < (dataSetSize-loop1-1)){
-                if (dataSet.get(loop2) > dataSet.get(loop2+1)) {
-                    swap(dataSet, loop2, loop2+1);
+        if (sortCounter < (dataSetSize-1)){
+            if (swapCounter < (dataSetSize- sortCounter -1)){
+                if (dataSet.get(swapCounter) > dataSet.get(swapCounter +1)) {
+                    addComparison();
+                    swap(dataSet, swapCounter, swapCounter +1);
                 }
-                loop2++;
+                swapCounter++;
             }
             else {
-                loop2 = 0;
-                loop1++;
+                swapCounter = 0;
+                sortCounter++;
             }
         }
         return dataSet;

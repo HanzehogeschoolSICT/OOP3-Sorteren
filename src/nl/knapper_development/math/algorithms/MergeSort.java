@@ -1,8 +1,7 @@
 package nl.knapper_development.math.algorithms;
-
 import nl.knapper_development.math.Algorithm;
-
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Copyright (C) 3/8/17 By Joris
@@ -23,6 +22,7 @@ public class MergeSort extends Algorithm {
     private ArrayList<ArrayList<Integer>> dataLists;
     private boolean firstStepDone = false;
     private int differentListLocation = 0;
+    private Random random = new Random();
 
     public MergeSort(ArrayList<Integer> dataSet) {
         super(dataSet);
@@ -53,21 +53,31 @@ public class MergeSort extends Algorithm {
         ArrayList<Integer> lowerSide = new ArrayList<>();
         ArrayList<Integer> higherSide = new ArrayList<>();
         int higestPos = (dataset.size() - 1);
-        int pivot = dataset.get((higestPos) / 2);
 
-        for (int i = 0; i <= higestPos; i++) {
-            int number = dataset.get(i);
-            if (number != pivot) {
-                if (number > pivot) {
-                    higherSide.add(number);
-                } else {
-                    lowerSide.add(number);
+        if (higestPos > 0){
+            int pivot = dataset.get(random.nextInt(higestPos));
+
+            for (int i = 0; i <= higestPos; i++) {
+                int number = dataset.get(i);
+                if (number != pivot) {
+                    addComparison();
+                    if (number > pivot) {
+                        higherSide.add(number);
+                    } else {
+                        lowerSide.add(number);
+                    }
                 }
             }
+
+            lowerSide.add(pivot);
+            System.out.println("LOWERSIDE:" + lowerSide);
+            System.out.println("HIGHERSIDE: " + higherSide);
+            dataLists.add(lowerSide);
+            dataLists.add(higherSide);
+        } else {
+            lowerSide.add(dataset.get(0));
+
         }
-        lowerSide.add(pivot);
-        dataLists.add(lowerSide);
-        dataLists.add(higherSide);
     }
 
     private ArrayList<Integer> mergeAll() {

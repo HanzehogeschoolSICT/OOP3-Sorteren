@@ -25,6 +25,7 @@ public abstract class Algorithm {
     private ArrayList<ArrayList<Integer>> history;
     private Condition condition;
     private Observer observer;
+    private int comparisons = 0;
 
     public Algorithm(ArrayList<Integer> dataSet) {
         this.dataSet = dataSet;
@@ -112,6 +113,11 @@ public abstract class Algorithm {
     private void onFinished() {
         if (this.observer != null) this.observer.onFinished();
     }
+
+    public void addComparison(){
+        comparisons++;
+    }
+
     //</editor-fold>
 
 
@@ -123,6 +129,11 @@ public abstract class Algorithm {
     public ArrayList<ArrayList<Integer>> getHistory() {
         return history;
     }
+
+    public int getComparisons() {
+        return comparisons;
+    }
+
     //</editor-fold>
 
 }
