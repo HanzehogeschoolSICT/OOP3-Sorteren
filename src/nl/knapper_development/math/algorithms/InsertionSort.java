@@ -21,7 +21,9 @@ import java.util.ArrayList;
 
 public class InsertionSort extends Algorithm {
 
-    private int loop1 = 0;
+    private int singleSortCounter = 1;
+    private int masterSortCounter = 1;
+    private int insertionCounter = 0;
     private int dataSetSize;
 
     public InsertionSort(ArrayList<Integer> dataSet) {
@@ -31,12 +33,20 @@ public class InsertionSort extends Algorithm {
 
     @Override
     protected ArrayList<Integer> loop(ArrayList<Integer> dataSet) {
-        if (loop1 < (dataSetSize-1)){
-            if (dataSet.get(loop1) < dataSet.get(loop1+1)){
-                loop1++;
+
+        //TODO Seems like bubblesort backwards....
+
+        if (masterSortCounter < dataSetSize) {
+            addComparison();
+            if ((insertionCounter >= 0) && (dataSet.get(singleSortCounter) < dataSet.get(insertionCounter))) {
+                swap(dataSet, singleSortCounter, insertionCounter);
+                insertionCounter--;
+                singleSortCounter--;
             }
             else {
-
+                masterSortCounter++;
+                singleSortCounter = masterSortCounter;
+                insertionCounter = (masterSortCounter - 1);
             }
         }
         return dataSet;

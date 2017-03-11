@@ -26,7 +26,7 @@ public abstract class Algorithm {
     private Condition condition;
     private Observer observer;
     private int comparisons = 0;
-
+    private int numberOfStepsTaken = 0;
     public Algorithm(ArrayList<Integer> dataSet) {
         this.dataSet = dataSet;
         this.history = new ArrayList<>();
@@ -37,6 +37,7 @@ public abstract class Algorithm {
     public void run() {
         while (!isSorted()) {
             onLoop();
+            numberOfStepsTaken++;
             ArrayList<Integer> loopResult = loop(this.dataSet);
             onLoopDone(loopResult);
             update(loopResult);
@@ -85,15 +86,6 @@ public abstract class Algorithm {
         this.history.add(entry);
     }
 
-    //<editor-fold desc="Observer">
-    public interface Observer {
-
-        void onLoop();
-        void onLoopDone(ArrayList<Integer> currentDataset);
-        void onFinished();
-
-    }
-
     public void setObserver(Observer observer) {
         this.observer = observer;
     }
@@ -118,13 +110,12 @@ public abstract class Algorithm {
         comparisons++;
     }
 
-    //</editor-fold>
-
-
     //<editor-fold desc="Getters and Setters">
     public ArrayList<Integer> getDataSet() {
         return dataSet;
     }
+
+    //</editor-fold>
 
     public ArrayList<ArrayList<Integer>> getHistory() {
         return history;
@@ -132,6 +123,21 @@ public abstract class Algorithm {
 
     public int getComparisons() {
         return comparisons;
+    }
+
+    public int getNumberOfStepsTaken() {
+        return numberOfStepsTaken;
+    }
+
+    //<editor-fold desc="Observer">
+    public interface Observer {
+
+        void onLoop();
+
+        void onLoopDone(ArrayList<Integer> currentDataset);
+
+        void onFinished();
+
     }
 
     //</editor-fold>

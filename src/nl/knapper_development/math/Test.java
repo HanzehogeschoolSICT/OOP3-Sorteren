@@ -18,7 +18,8 @@ package nl.knapper_development.math;
  */
 
 import nl.knapper_development.math.algorithms.BubbleSort;
-import nl.knapper_development.math.algorithms.MergeSort;
+import nl.knapper_development.math.algorithms.InsertionSort;
+import nl.knapper_development.math.algorithms.QuickSort;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +30,7 @@ public class Test {
 
         ArrayList<Integer> dataSet1 = new ArrayList<>(Arrays.asList(23, 452, 12, 22, 2, 1, 86, 45));
         ArrayList<Integer> dataSet2 = new ArrayList<>(Arrays.asList(23, 452, 12, 22, 2, 1, 86, 45));
+        ArrayList<Integer> dataSet3 = new ArrayList<>(Arrays.asList(23, 452, 12, 22, 2, 1, 86, 45));
 
         BubbleSort bs = new BubbleSort(dataSet1);
         bs.setObserver(new Algorithm.Observer() {
@@ -43,13 +45,13 @@ public class Test {
 
             @Override
             public void onFinished() {
-                System.out.println("BS DONE, " + bs.getComparisons() + "comparisons.\n----------");
+                System.out.println("BS DONE, " + bs.getComparisons() + " comparisons, " + bs.getNumberOfStepsTaken() + " steps.\n----------");
             }
         });
 
 
-        MergeSort ms = new MergeSort(dataSet2);
-        ms.setObserver(new Algorithm.Observer() {
+        QuickSort qs = new QuickSort(dataSet2);
+        qs.setObserver(new Algorithm.Observer() {
             @Override
             public void onLoop() {
 
@@ -62,13 +64,32 @@ public class Test {
 
             @Override
             public void onFinished() {
-                System.out.println("MS DONE, " + ms.getComparisons() + "comparisons.\n----------");
+                System.out.println("QS DONE, " + qs.getComparisons() + " comparisons, " + qs.getNumberOfStepsTaken() + " steps.\n----------");
+            }
+        });
+
+        InsertionSort is = new InsertionSort(dataSet3);
+        is.setObserver(new Algorithm.Observer() {
+            @Override
+            public void onLoop() {
+
+            }
+
+            @Override
+            public void onLoopDone(ArrayList<Integer> currentDataset) {
+                System.out.println(currentDataset);
+            }
+
+            @Override
+            public void onFinished() {
+                System.out.println("IS DONE, " + is.getComparisons() + " comparisons, " + is.getNumberOfStepsTaken() + " steps.\n----------");
             }
         });
 
 
         bs.run();
-        ms.run();
+        qs.run();
+        is.run();
     }
 
 }
