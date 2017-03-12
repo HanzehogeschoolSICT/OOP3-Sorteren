@@ -17,7 +17,13 @@ import nl.knapper_development.math.Algorithm;
 
 import java.util.ArrayList;
 
+@Deprecated
 public class MergeSort extends Algorithm {
+
+    private int stepCounter = 0;
+    private int mergecounter = 1;
+    private ArrayList<ArrayList<Integer>> dataLists;
+    private ArrayList<Integer> working;
 
     public MergeSort(ArrayList<Integer> dataSet) {
         super(dataSet);
@@ -25,6 +31,27 @@ public class MergeSort extends Algorithm {
 
     @Override
     protected ArrayList<Integer> loop(ArrayList<Integer> dataSet) {
-        return null;
+        if (stepCounter < (dataSet.size()) % 2) {
+            if (working.size() < mergecounter) {
+
+            } else {
+
+            }
+        } else {
+
+        }
+
+        return mergeAll();
+    }
+
+    private ArrayList<Integer> mergeAll() {
+        ArrayList<java.lang.Integer> merged = new ArrayList<>();
+
+        System.out.println("DATALISTS: " + dataLists);
+        for (ArrayList<java.lang.Integer> list : dataLists) {
+            merged.addAll(list);
+        }
+        System.out.println("TOTALSET: " + merged);
+        return merged;
     }
 }
