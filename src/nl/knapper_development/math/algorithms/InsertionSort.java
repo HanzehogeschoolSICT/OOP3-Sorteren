@@ -1,6 +1,6 @@
 package nl.knapper_development.math.algorithms;
 
-import nl.knapper_development.math.Algorithm;
+import nl.knapper_development.math.StepAlgorithm;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class InsertionSort extends Algorithm {
+public class InsertionSort extends StepAlgorithm {
 
     private int singleSortCounter = 1;
     private int masterSortCounter = 1;

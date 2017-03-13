@@ -13,12 +13,12 @@ package nl.knapper_development.math.algorithms;/**
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import nl.knapper_development.math.Algorithm;
+import nl.knapper_development.math.StepAlgorithm;
 
 import java.util.ArrayList;
 
 @Deprecated
-public class MergeSort extends Algorithm {
+public class MergeSort extends StepAlgorithm {
 
     private int stepCounter = 0;
     private int mergecounter = 1;

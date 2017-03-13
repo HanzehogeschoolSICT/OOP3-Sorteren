@@ -1,5 +1,7 @@
-package nl.knapper_development.math;/*
-    Copyright (C) 3/13/17  Hanze Hogeschool ITV2D
+package nl.knapper_development.math;
+
+/*
+    Copyright (C) 3/8/17  Hanze Hogeschool ITV2D
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,38 +19,50 @@ package nl.knapper_development.math;/*
 
 import java.util.ArrayList;
 
-public abstract class Algorithm extends Thread {
+@Deprecated
+public abstract class StepAlgorithm {
 
     private ArrayList<Integer> dataSet;
-    private long interval;
+    private ArrayList<ArrayList<Integer>> history;
+    private Condition condition;
     private Observer observer;
-
     private int comparisons = 0;
     private int numberOfStepsTaken = 0;
-    private boolean paused = false;
+    public StepAlgorithm(ArrayList<Integer> dataSet) {
+        this.dataSet = dataSet;
+        this.history = new ArrayList<>();
+    }
 
     protected abstract ArrayList<Integer> loop(ArrayList<Integer> dataSet);
 
-    public Algorithm(long interval) {
-        this.interval = interval;
-        this.dataSet = new ArrayList<>();
-    }
+    public void run() {
+        while (!isSorted()) {
+            onLoop();
+            numberOfStepsTaken++;
+            ArrayList<Integer> loopResult = loop(this.dataSet);
+            onLoopDone(loopResult);
+            update(loopResult);
+        }
 
-    public Algorithm(ArrayList<Integer> dataSet, long interval) {
-        this.dataSet = dataSet;
-        this.interval = interval;
-    }
-
-    public Algorithm(ArrayList<Integer> dataSet, long interval, Observer observer) {
-        this.dataSet = dataSet;
-        this.interval = interval;
-        this.observer = observer;
+        onFinished();
     }
 
     public void swap(ArrayList<Integer> dataSet, int pos1, int pos2){
         int swap = dataSet.get(pos1);
         dataSet.set(pos1, dataSet.get(pos2));
         dataSet.set(pos2, swap);
+    }
+
+    public void runWithCondition(Condition condition) {
+        this.condition = condition;
+        while (!condition.criteria()) {
+            onLoop();
+            ArrayList<Integer> loopResult = loop(this.dataSet);
+            onLoopDone(loopResult);
+            update(loopResult);
+        }
+
+        onFinished();
     }
 
     public boolean isSorted() {
@@ -60,51 +74,17 @@ public abstract class Algorithm extends Thread {
         return sorted;
     }
 
-    public void addComparison(){
-        comparisons++;
+    private void update(ArrayList<Integer> dataSet) {
+        updateHistory(dataSet);
+        updateDataset(dataSet);
     }
 
-    private void doStep() {
-        onLoop();
-        numberOfStepsTaken++;
-        ArrayList<Integer> loopResult = loop(this.dataSet);
-        onLoopDone(loopResult);
-        try {
-            Thread.sleep(interval);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    private void updateDataset(ArrayList<Integer> dataSet) {
+        this.dataSet = dataSet;
     }
 
-    @Override
-    public synchronized void start() {
-        super.start();
-        while (!isSorted()) {
-            if (!paused) {
-                doStep();
-            }
-        }
-
-        onFinished();
-    }
-
-    public synchronized void pause() {
-        this.paused = true;
-    }
-
-    public synchronized void unpause() {
-        this.paused = false;
-    }
-
-    //<editor-fold desc="Observer">
-    public interface Observer {
-
-        void onLoop();
-
-        void onLoopDone(ArrayList<Integer> currentDataset);
-
-        void onFinished();
-
+    private void updateHistory(ArrayList<Integer> entry) {
+        this.history.add(entry);
     }
 
     public void setObserver(Observer observer) {
@@ -125,6 +105,40 @@ public abstract class Algorithm extends Thread {
 
     private void onFinished() {
         if (this.observer != null) this.observer.onFinished();
+    }
+
+    public void addComparison(){
+        comparisons++;
+    }
+
+    //<editor-fold desc="Getters and Setters">
+    public ArrayList<Integer> getDataSet() {
+        return dataSet;
+    }
+
+    //</editor-fold>
+
+    public ArrayList<ArrayList<Integer>> getHistory() {
+        return history;
+    }
+
+    public int getComparisons() {
+        return comparisons;
+    }
+
+    public int getNumberOfStepsTaken() {
+        return numberOfStepsTaken;
+    }
+
+    //<editor-fold desc="Observer">
+    public interface Observer {
+
+        void onLoop();
+
+        void onLoopDone(ArrayList<Integer> currentDataset);
+
+        void onFinished();
+
     }
 
     //</editor-fold>

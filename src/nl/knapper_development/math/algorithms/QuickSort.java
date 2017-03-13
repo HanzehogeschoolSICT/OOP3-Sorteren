@@ -1,6 +1,6 @@
 package nl.knapper_development.math.algorithms;
 
-import nl.knapper_development.math.Algorithm;
+import nl.knapper_development.math.StepAlgorithm;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -19,7 +19,7 @@ import java.util.Random;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-public class QuickSort extends Algorithm {
+public class QuickSort extends StepAlgorithm {
 
     private ArrayList<ArrayList<Integer>> dataLists;
     private boolean firstStepDone = false;

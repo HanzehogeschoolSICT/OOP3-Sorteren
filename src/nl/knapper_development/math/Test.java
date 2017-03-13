@@ -33,7 +33,7 @@ public class Test {
         ArrayList<Integer> dataSet3 = new ArrayList<>(Arrays.asList(23, 452, 12, 22, 2, 1, 86, 45));
 
         BubbleSort bs = new BubbleSort(dataSet1);
-        bs.setObserver(new Algorithm.Observer() {
+        bs.setObserver(new StepAlgorithm.Observer() {
             @Override
             public void onLoop() {
             }
@@ -51,7 +51,7 @@ public class Test {
 
 
         QuickSort qs = new QuickSort(dataSet2);
-        qs.setObserver(new Algorithm.Observer() {
+        qs.setObserver(new StepAlgorithm.Observer() {
             @Override
             public void onLoop() {
 
@@ -69,7 +69,7 @@ public class Test {
         });
 
         InsertionSort is = new InsertionSort(dataSet3);
-        is.setObserver(new Algorithm.Observer() {
+        is.setObserver(new StepAlgorithm.Observer() {
             @Override
             public void onLoop() {
 

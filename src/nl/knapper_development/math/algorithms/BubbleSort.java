@@ -1,10 +1,10 @@
 package nl.knapper_development.math.algorithms;
 
-import nl.knapper_development.math.Algorithm;
+import nl.knapper_development.math.StepAlgorithm;
 
 import java.util.ArrayList;
 
-public class BubbleSort extends Algorithm {
+public class BubbleSort extends StepAlgorithm {
 
     private int sortCounter = 0;
     private int swapCounter = 0;
