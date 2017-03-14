@@ -1,6 +1,6 @@
 package nl.knapper_development.math.algorithms;
 
-import nl.knapper_development.math.StepAlgorithm;
+import nl.knapper_development.math.Algorithm;
 
 import java.util.ArrayList;
 
@@ -19,22 +19,23 @@ import java.util.ArrayList;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class InsertionSort extends StepAlgorithm {
+public class InsertionSort extends Algorithm {
 
     private int singleSortCounter = 1;
     private int masterSortCounter = 1;
     private int insertionCounter = 0;
     private int dataSetSize;
 
-    public InsertionSort(ArrayList<Integer> dataSet) {
-        super(dataSet);
+    public InsertionSort(ArrayList<Integer> dataSet, long interval, Observer observer) {
+        super(dataSet, interval, observer);
         dataSetSize = dataSet.size();
     }
 
     @Override
     protected ArrayList<Integer> loop(ArrayList<Integer> dataSet) {
 
-        //TODO Seems like bubblesort backwards....
+        //TODO sometimes outputs of two steps are identical...
+
 
         if (masterSortCounter < dataSetSize) {
             addComparison();

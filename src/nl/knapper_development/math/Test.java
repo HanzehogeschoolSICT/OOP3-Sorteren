@@ -28,12 +28,11 @@ public class Test {
 
     public static void main(String[] args) {
 
-        ArrayList<Integer> dataSet1 = new ArrayList<>(Arrays.asList(23, 452, 12, 22, 2, 1, 86, 45));
-        ArrayList<Integer> dataSet2 = new ArrayList<>(Arrays.asList(23, 452, 12, 22, 2, 1, 86, 45));
-        ArrayList<Integer> dataSet3 = new ArrayList<>(Arrays.asList(23, 452, 12, 22, 2, 1, 86, 45));
+        ArrayList<Integer> dataSet1 = new ArrayList<>(Arrays.asList(23, 452, 12, 22, 2, 1, 86, 45, 30, 12, 45));
+        ArrayList<Integer> dataSet2 = new ArrayList<>(Arrays.asList(23, 452, 12, 22, 2, 1, 86, 45, 30, 12, 45));
+        ArrayList<Integer> dataSet3 = new ArrayList<>(Arrays.asList(23, 452, 12, 22, 2, 1, 86, 45, 30, 12, 45));
 
-        BubbleSort bs = new BubbleSort(dataSet1);
-        bs.setObserver(new StepAlgorithm.Observer() {
+        BubbleSort bs = new BubbleSort(dataSet1, 0, new Algorithm.Observer() {
             @Override
             public void onLoop() {
             }
@@ -44,14 +43,33 @@ public class Test {
             }
 
             @Override
-            public void onFinished() {
-                System.out.println("BS DONE, " + bs.getComparisons() + " comparisons, " + bs.getNumberOfStepsTaken() + " steps.\n----------");
+            public void onFinished(Algorithm thisAlgorithm) {
+                System.out.println("BS DONE, " + thisAlgorithm.getComparisons() + " comparisons, " + thisAlgorithm.getNumberOfStepsTaken() + " steps.\n----------");
+            }
+
+        });
+
+        QuickSort qs = new QuickSort(dataSet2, 0, new Algorithm.Observer() {
+            @Override
+            public void onLoop() {
+
+            }
+
+            @Override
+            public void onLoopDone(ArrayList<Integer> currentDataset) {
+                System.out.println(currentDataset);
+
+            }
+
+            @Override
+            public void onFinished(Algorithm thisAlgorithm) {
+                System.out.println("QS DONE, " + thisAlgorithm.getComparisons() + " comparisons, " + thisAlgorithm.getNumberOfStepsTaken() + " steps.\n----------");
+
             }
         });
 
 
-        QuickSort qs = new QuickSort(dataSet2);
-        qs.setObserver(new StepAlgorithm.Observer() {
+        InsertionSort is = new InsertionSort(dataSet3, 0, new Algorithm.Observer() {
             @Override
             public void onLoop() {
 
@@ -59,36 +77,18 @@ public class Test {
 
             @Override
             public void onLoopDone(ArrayList<Integer> currentDataset) {
+
                 System.out.println(currentDataset);
             }
-
             @Override
-            public void onFinished() {
-                System.out.println("QS DONE, " + qs.getComparisons() + " comparisons, " + qs.getNumberOfStepsTaken() + " steps.\n----------");
-            }
-        });
-
-        InsertionSort is = new InsertionSort(dataSet3);
-        is.setObserver(new StepAlgorithm.Observer() {
-            @Override
-            public void onLoop() {
-
-            }
-
-            @Override
-            public void onLoopDone(ArrayList<Integer> currentDataset) {
-                System.out.println(currentDataset);
-            }
-
-            @Override
-            public void onFinished() {
-                System.out.println("IS DONE, " + is.getComparisons() + " comparisons, " + is.getNumberOfStepsTaken() + " steps.\n----------");
+            public void onFinished(Algorithm thisAlgorithm) {
+                System.out.println("IS DONE, " + thisAlgorithm.getComparisons() + " comparisons, " + thisAlgorithm.getNumberOfStepsTaken() + " steps.\n----------");
             }
         });
 
 
         bs.run();
-        qs.run();
+        //qs.run();
         is.run();
     }
 

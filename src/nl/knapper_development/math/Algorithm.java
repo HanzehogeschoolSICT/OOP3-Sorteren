@@ -27,8 +27,6 @@ public abstract class Algorithm extends Thread {
     private int numberOfStepsTaken = 0;
     private boolean paused = false;
 
-    protected abstract ArrayList<Integer> loop(ArrayList<Integer> dataSet);
-
     public Algorithm(long interval) {
         this.interval = interval;
         this.dataSet = new ArrayList<>();
@@ -45,6 +43,8 @@ public abstract class Algorithm extends Thread {
         this.observer = observer;
     }
 
+    protected abstract ArrayList<Integer> loop(ArrayList<Integer> dataSet);
+
     public void swap(ArrayList<Integer> dataSet, int pos1, int pos2){
         int swap = dataSet.get(pos1);
         dataSet.set(pos1, dataSet.get(pos2));
@@ -56,7 +56,6 @@ public abstract class Algorithm extends Thread {
         for (int count = 1; count < this.dataSet.size(); count++) {
             if (dataSet.get(count-1).compareTo(dataSet.get(count)) > 0) sorted = false;
         }
-
         return sorted;
     }
 
@@ -77,7 +76,7 @@ public abstract class Algorithm extends Thread {
     }
 
     @Override
-    public synchronized void start() {
+    public synchronized void run() {
         super.start();
         while (!isSorted()) {
             if (!paused) {
@@ -85,7 +84,7 @@ public abstract class Algorithm extends Thread {
             }
         }
 
-        onFinished();
+        onFinished(this);
     }
 
     public synchronized void pause() {
@@ -96,23 +95,12 @@ public abstract class Algorithm extends Thread {
         this.paused = false;
     }
 
-    //<editor-fold desc="Observer">
-    public interface Observer {
-
-        void onLoop();
-
-        void onLoopDone(ArrayList<Integer> currentDataset);
-
-        void onFinished();
-
+    public int getComparisons() {
+        return comparisons;
     }
 
-    public void setObserver(Observer observer) {
-        this.observer = observer;
-    }
-
-    public void unsetObserver() {
-        this.observer = null;
+    public int getNumberOfStepsTaken() {
+        return numberOfStepsTaken;
     }
 
     private void onLoop() {
@@ -123,8 +111,19 @@ public abstract class Algorithm extends Thread {
         if (this.observer != null) this.observer.onLoopDone(currentDataset);
     }
 
-    private void onFinished() {
-        if (this.observer != null) this.observer.onFinished();
+    private void onFinished(Algorithm algorithm) {
+        if (this.observer != null) this.observer.onFinished(algorithm);
+    }
+
+    //<editor-fold desc="Observer">
+    public interface Observer {
+
+        void onLoop();
+
+        void onLoopDone(ArrayList<Integer> currentDataset);
+
+        void onFinished(Algorithm thisAlgorithm);
+
     }
 
     //</editor-fold>

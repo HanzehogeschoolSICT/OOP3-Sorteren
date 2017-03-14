@@ -1,22 +1,24 @@
 package nl.knapper_development.math.algorithms;
 
-import nl.knapper_development.math.StepAlgorithm;
+import nl.knapper_development.math.Algorithm;
 
 import java.util.ArrayList;
 
-public class BubbleSort extends StepAlgorithm {
+public class BubbleSort extends Algorithm {
 
     private int sortCounter = 0;
     private int swapCounter = 0;
     private int dataSetSize = 0;
 
-    public BubbleSort(ArrayList<Integer> dataSet) {
-        super(dataSet);
-        dataSetSize = dataSet.size();
+    public BubbleSort(ArrayList<Integer> dataSet, long interval, Observer observer) {
+        super(dataSet, interval, observer);
+        this.dataSetSize = dataSet.size();
     }
 
     @Override
     protected ArrayList<Integer> loop(ArrayList<Integer> dataSet) {
+
+        //TODO sometimes outputs of two steps are identical...
 
         if (sortCounter < (dataSetSize-1)){
             if (swapCounter < (dataSetSize- sortCounter -1)){
