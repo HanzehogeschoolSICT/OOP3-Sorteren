@@ -34,8 +34,7 @@ public class InsertionSort extends Algorithm {
     @Override
     protected ArrayList<Integer> loop(ArrayList<Integer> dataSet) {
 
-        //TODO sometimes outputs of two steps are identical...
-
+        //TODO sometimes outputs of two steps are identical....
 
         if (masterSortCounter < dataSetSize) {
             addComparison();
