@@ -1,14 +1,19 @@
 package nl.knapper_development.math.algorithms;
 
-import nl.knapper_development.math.Algorithm;
+import nl.knapper_development.math.LiveAlgorithm;
 
 import java.util.ArrayList;
 
-public class BubbleSort extends Algorithm {
+public class BubbleSort extends LiveAlgorithm {
 
     private int sortCounter = 0;
     private int swapCounter = 0;
     private int dataSetSize = 0;
+
+    public BubbleSort(ArrayList<Integer> dataSet, long interval) {
+        super(dataSet, interval);
+        dataSetSize = dataSet.size();
+    }
 
     public BubbleSort(ArrayList<Integer> dataSet, long interval, Observer observer) {
         super(dataSet, interval, observer);

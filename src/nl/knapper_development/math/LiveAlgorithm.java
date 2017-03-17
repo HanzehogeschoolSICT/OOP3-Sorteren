@@ -17,7 +17,7 @@ package nl.knapper_development.math;/*
 
 import java.util.ArrayList;
 
-public abstract class Algorithm extends Thread {
+public abstract class LiveAlgorithm implements Runnable {
 
     private ArrayList<Integer> dataSet;
     private long interval;
@@ -27,17 +27,17 @@ public abstract class Algorithm extends Thread {
     private int numberOfStepsTaken = 0;
     private boolean paused = false;
 
-    public Algorithm(long interval) {
+    public LiveAlgorithm(long interval) {
         this.interval = interval;
         this.dataSet = new ArrayList<>();
     }
 
-    public Algorithm(ArrayList<Integer> dataSet, long interval) {
+    public LiveAlgorithm(ArrayList<Integer> dataSet, long interval) {
         this.dataSet = dataSet;
         this.interval = interval;
     }
 
-    public Algorithm(ArrayList<Integer> dataSet, long interval, Observer observer) {
+    public LiveAlgorithm(ArrayList<Integer> dataSet, long interval, Observer observer) {
         this.dataSet = dataSet;
         this.interval = interval;
         this.observer = observer;
@@ -76,12 +76,18 @@ public abstract class Algorithm extends Thread {
     }
 
     @Override
-    public synchronized void run() {
-        super.start();
+    public void run() {
         while (!isSorted()) {
-            if (!paused) {
-                doStep();
+            synchronized (this) {
+                if (paused) {
+                    try {
+                        wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
+            doStep();
         }
 
         onFinished(this);
@@ -93,6 +99,11 @@ public abstract class Algorithm extends Thread {
 
     public synchronized void unpause() {
         this.paused = false;
+        this.notifyAll();
+    }
+
+    public synchronized boolean isPaused() {
+        return paused;
     }
 
     public int getComparisons() {
@@ -103,6 +114,25 @@ public abstract class Algorithm extends Thread {
         return numberOfStepsTaken;
     }
 
+    //<editor-fold desc="Observer">
+    public interface Observer {
+
+        void onLoop();
+
+        void onLoopDone(ArrayList<Integer> currentDataset);
+
+        void onFinished(LiveAlgorithm thisLiveAlgorithm);
+
+    }
+
+    public void setObserver(Observer observer) {
+        this.observer = observer;
+    }
+
+    public void unsetObserver() {
+        this.observer = null;
+    }
+
     private void onLoop() {
         if (this.observer != null) this.observer.onLoop();
     }
@@ -111,19 +141,8 @@ public abstract class Algorithm extends Thread {
         if (this.observer != null) this.observer.onLoopDone(currentDataset);
     }
 
-    private void onFinished(Algorithm algorithm) {
-        if (this.observer != null) this.observer.onFinished(algorithm);
-    }
-
-    //<editor-fold desc="Observer">
-    public interface Observer {
-
-        void onLoop();
-
-        void onLoopDone(ArrayList<Integer> currentDataset);
-
-        void onFinished(Algorithm thisAlgorithm);
-
+    private void onFinished(LiveAlgorithm liveAlgorithm) {
+        if (this.observer != null) this.observer.onFinished(liveAlgorithm);
     }
 
     //</editor-fold>

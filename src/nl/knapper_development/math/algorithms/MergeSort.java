@@ -45,10 +45,10 @@ public class MergeSort extends StepAlgorithm {
     }
 
     private ArrayList<Integer> mergeAll() {
-        ArrayList<java.lang.Integer> merged = new ArrayList<>();
+        ArrayList<Integer> merged = new ArrayList<>();
 
         System.out.println("DATALISTS: " + dataLists);
-        for (ArrayList<java.lang.Integer> list : dataLists) {
+        for (ArrayList<Integer> list : dataLists) {
             merged.addAll(list);
         }
         System.out.println("TOTALSET: " + merged);

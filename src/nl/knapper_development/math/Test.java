@@ -32,7 +32,7 @@ public class Test {
         ArrayList<Integer> dataSet2 = new ArrayList<>(Arrays.asList(23, 452, 12, 22, 2, 1, 86, 45, 30, 12, 45));
         ArrayList<Integer> dataSet3 = new ArrayList<>(Arrays.asList(23, 452, 12, 22, 2, 1, 86, 45, 30, 12, 45));
 
-        BubbleSort bs = new BubbleSort(dataSet1, 0, new Algorithm.Observer() {
+        BubbleSort bs = new BubbleSort(dataSet1, 0, new LiveAlgorithm.Observer() {
             @Override
             public void onLoop() {
             }
@@ -43,13 +43,13 @@ public class Test {
             }
 
             @Override
-            public void onFinished(Algorithm thisAlgorithm) {
+            public void onFinished(LiveAlgorithm thisAlgorithm) {
                 System.out.println("BS DONE, " + thisAlgorithm.getComparisons() + " comparisons, " + thisAlgorithm.getNumberOfStepsTaken() + " steps.\n----------");
             }
 
         });
 
-        QuickSort qs = new QuickSort(dataSet2, 0, new Algorithm.Observer() {
+        QuickSort qs = new QuickSort(dataSet2, 0, new LiveAlgorithm.Observer() {
             @Override
             public void onLoop() {
 
@@ -62,14 +62,14 @@ public class Test {
             }
 
             @Override
-            public void onFinished(Algorithm thisAlgorithm) {
+            public void onFinished(LiveAlgorithm thisAlgorithm) {
                 System.out.println("QS DONE, " + thisAlgorithm.getComparisons() + " comparisons, " + thisAlgorithm.getNumberOfStepsTaken() + " steps.\n----------");
 
             }
         });
 
 
-        InsertionSort is = new InsertionSort(dataSet3, 0, new Algorithm.Observer() {
+        InsertionSort is = new InsertionSort(dataSet3, 0, new LiveAlgorithm.Observer() {
             @Override
             public void onLoop() {
 
@@ -81,7 +81,7 @@ public class Test {
                 System.out.println(currentDataset);
             }
             @Override
-            public void onFinished(Algorithm thisAlgorithm) {
+            public void onFinished(LiveAlgorithm thisAlgorithm) {
                 System.out.println("IS DONE, " + thisAlgorithm.getComparisons() + " comparisons, " + thisAlgorithm.getNumberOfStepsTaken() + " steps.\n----------");
             }
         });

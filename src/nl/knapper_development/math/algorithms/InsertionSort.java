@@ -1,6 +1,6 @@
 package nl.knapper_development.math.algorithms;
 
-import nl.knapper_development.math.Algorithm;
+import nl.knapper_development.math.LiveAlgorithm;
 
 import java.util.ArrayList;
 
@@ -19,12 +19,17 @@ import java.util.ArrayList;
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class InsertionSort extends Algorithm {
+public class InsertionSort extends LiveAlgorithm {
 
     private int singleSortCounter = 1;
     private int masterSortCounter = 1;
     private int insertionCounter = 0;
     private int dataSetSize;
+
+    public InsertionSort(ArrayList<Integer> dataSet, long interval) {
+        super(dataSet, interval);
+        dataSetSize = dataSet.size();
+    }
 
     public InsertionSort(ArrayList<Integer> dataSet, long interval, Observer observer) {
         super(dataSet, interval, observer);

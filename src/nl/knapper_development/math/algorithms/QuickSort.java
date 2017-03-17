@@ -1,6 +1,6 @@
 package nl.knapper_development.math.algorithms;
 
-import nl.knapper_development.math.Algorithm;
+import nl.knapper_development.math.LiveAlgorithm;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -19,12 +19,17 @@ import java.util.Random;
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-public class QuickSort extends Algorithm {
+public class QuickSort extends LiveAlgorithm {
 
     private ArrayList<ArrayList<Integer>> dataLists;
     private boolean firstStepDone = false;
     private int differentListLocation = 0;
     private Random random = new Random();
+
+    public QuickSort(ArrayList<Integer> dataSet, long interval) {
+        super(dataSet, interval);
+        dataLists = new ArrayList<>();
+    }
 
     public QuickSort(ArrayList<Integer> dataSet, long interval, Observer observer) {
         super(dataSet, interval, observer);
