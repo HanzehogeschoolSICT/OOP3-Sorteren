@@ -39,8 +39,6 @@ public class InsertionSort extends LiveAlgorithm {
     @Override
     protected ArrayList<Integer> loop(ArrayList<Integer> dataSet) {
 
-        //TODO sometimes outputs of two steps are identical....
-
         if (masterSortCounter < dataSetSize) {
             addComparison();
             if ((insertionCounter >= 0) && (dataSet.get(singleSortCounter) < dataSet.get(insertionCounter))) {

@@ -13,20 +13,22 @@ package nl.knapper_development.math.algorithms;/**
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import nl.knapper_development.math.StepAlgorithm;
+import jdk.nashorn.internal.ir.annotations.Ignore;
+import nl.knapper_development.math.LiveAlgorithm;
 
 import java.util.ArrayList;
 
 @Deprecated
-public class MergeSort extends StepAlgorithm {
+public class MergeSort extends LiveAlgorithm {
 
     private int stepCounter = 0;
     private int mergecounter = 1;
     private ArrayList<ArrayList<Integer>> dataLists;
     private ArrayList<Integer> working;
 
+    @Ignore
     public MergeSort(ArrayList<Integer> dataSet) {
-        super(dataSet);
+        super(dataSet, 1000);
     }
 
     @Override

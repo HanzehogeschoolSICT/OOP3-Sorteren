@@ -47,12 +47,15 @@ public class Test {
                 System.out.println("BS DONE, " + thisAlgorithm.getComparisons() + " comparisons, " + thisAlgorithm.getNumberOfStepsTaken() + " steps.\n----------");
             }
 
+            @Override
+            public void onSwap(Swap swap) {
+                System.out.println(swap.toString());
+            }
         });
 
         QuickSort qs = new QuickSort(dataSet2, 0, new LiveAlgorithm.Observer() {
             @Override
             public void onLoop() {
-
             }
 
             @Override
@@ -64,6 +67,12 @@ public class Test {
             @Override
             public void onFinished(LiveAlgorithm thisAlgorithm) {
                 System.out.println("QS DONE, " + thisAlgorithm.getComparisons() + " comparisons, " + thisAlgorithm.getNumberOfStepsTaken() + " steps.\n----------");
+
+            }
+
+            @Override
+            public void onSwap(Swap swap) {
+                System.out.println(swap.toString());
 
             }
         });
@@ -83,6 +92,11 @@ public class Test {
             @Override
             public void onFinished(LiveAlgorithm thisAlgorithm) {
                 System.out.println("IS DONE, " + thisAlgorithm.getComparisons() + " comparisons, " + thisAlgorithm.getNumberOfStepsTaken() + " steps.\n----------");
+            }
+
+            @Override
+            public void onSwap(Swap swap) {
+                System.out.println(swap.toString());
             }
         });
 

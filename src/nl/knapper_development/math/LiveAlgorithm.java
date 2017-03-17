@@ -49,6 +49,8 @@ public abstract class LiveAlgorithm implements Runnable {
         int swap = dataSet.get(pos1);
         dataSet.set(pos1, dataSet.get(pos2));
         dataSet.set(pos2, swap);
+
+        onSwap(new Swap(pos1, pos2, pos2, pos1));
     }
 
     public boolean isSorted() {
@@ -114,17 +116,6 @@ public abstract class LiveAlgorithm implements Runnable {
         return numberOfStepsTaken;
     }
 
-    //<editor-fold desc="Observer">
-    public interface Observer {
-
-        void onLoop();
-
-        void onLoopDone(ArrayList<Integer> currentDataset);
-
-        void onFinished(LiveAlgorithm thisLiveAlgorithm);
-
-    }
-
     public void setObserver(Observer observer) {
         this.observer = observer;
     }
@@ -137,12 +128,29 @@ public abstract class LiveAlgorithm implements Runnable {
         if (this.observer != null) this.observer.onLoop();
     }
 
+    private void onSwap(Swap swap) {
+        if (this.observer != null) this.observer.onSwap(swap);
+    }
+
     private void onLoopDone(ArrayList<Integer> currentDataset) {
         if (this.observer != null) this.observer.onLoopDone(currentDataset);
     }
 
     private void onFinished(LiveAlgorithm liveAlgorithm) {
         if (this.observer != null) this.observer.onFinished(liveAlgorithm);
+    }
+
+    //<editor-fold desc="Observer">
+    public interface Observer {
+
+        void onLoop();
+
+        void onSwap(Swap swap);
+
+        void onLoopDone(ArrayList<Integer> currentDataset);
+
+        void onFinished(LiveAlgorithm thisLiveAlgorithm);
+
     }
 
     //</editor-fold>
