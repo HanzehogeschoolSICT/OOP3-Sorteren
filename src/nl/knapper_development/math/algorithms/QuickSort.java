@@ -3,6 +3,7 @@ package nl.knapper_development.math.algorithms;
 import nl.knapper_development.math.LiveAlgorithm;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -37,46 +38,56 @@ public class QuickSort extends LiveAlgorithm {
     }
 
     @Override
-    protected ArrayList<Integer> loop(ArrayList<Integer> dataSet) {
+    protected ArrayList<ArrayList<Integer>> loop(ArrayList<Integer> dataSet) {
+        int pivotIndex = -1;
 
         if (dataLists.size() != 0) {
             if (differentListLocation < dataLists.size()) {
                 ArrayList<Integer> list = dataLists.get(differentListLocation);
-                seperator(list);
+                pivotIndex = seperator(list);
                 dataLists.remove(list);
             }
         } else {
             if (!firstStepDone) {
-                seperator(dataSet);
+                pivotIndex = seperator(dataSet);
                 firstStepDone = true;
             }
             differentListLocation = 0;
         }
 
-        return mergeAll();
+        ArrayList<Integer> newDataSet = mergeAll();
+        super.setDataSet(newDataSet);
+
+        return new ArrayList<>(Arrays.asList(newDataSet, new ArrayList<>(Arrays.asList(pivotIndex))));
     }
 
-    private void seperator(ArrayList<Integer> dataset) {
+    private int seperator(ArrayList<Integer> dataset) {
         ArrayList<Integer> lowerSide = new ArrayList<>();
         ArrayList<Integer> higherSide = new ArrayList<>();
         int higestPos = (dataset.size() - 1);
+        int numberOfPivots = 0;
 
         if (higestPos > 0) {
-            int pivot = dataset.get(random.nextInt(higestPos));
+            int pivotIndex = random.nextInt(higestPos);
+            int pivot = dataset.get(pivotIndex);
+            numberOfPivots++;
 
             for (int i = 0; i <= higestPos; i++) {
                 int number = dataset.get(i);
-                if (number != pivot) {
-                    addComparison();
-                    if (number > pivot) {
-                        higherSide.add(number);
-                    } else {
-                        lowerSide.add(number);
-                    }
+                addComparison();
+                if (number > pivot) {
+                    higherSide.add(number);
+                } else if (number < pivot) {
+                    lowerSide.add(number);
+                } else if (number == pivot) {
+                    numberOfPivots++;
                 }
             }
 
-            lowerSide.add(pivot);
+            for (int i = 1; i < numberOfPivots; i++) {
+                lowerSide.add(pivot);
+            }
+
             dataLists.add(lowerSide);
             if (higherSide.size() > 0) {
                 dataLists.add(higherSide);
@@ -86,6 +97,7 @@ public class QuickSort extends LiveAlgorithm {
             dataLists.add(lowerSide);
 
         }
+        return (lowerSide.size() - 1);
     }
 
     private ArrayList<Integer> mergeAll() {
@@ -94,6 +106,7 @@ public class QuickSort extends LiveAlgorithm {
         for (ArrayList<Integer> list : dataLists) {
             merged.addAll(list);
         }
+        System.out.println("MERGED: " + merged);
         return merged;
     }
 

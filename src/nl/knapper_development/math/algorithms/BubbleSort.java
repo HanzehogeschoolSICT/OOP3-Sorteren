@@ -3,6 +3,7 @@ package nl.knapper_development.math.algorithms;
 import nl.knapper_development.math.LiveAlgorithm;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class BubbleSort extends LiveAlgorithm {
 
@@ -21,15 +22,14 @@ public class BubbleSort extends LiveAlgorithm {
     }
 
     @Override
-    protected ArrayList<Integer> loop(ArrayList<Integer> dataSet) {
-
-        //TODO sometimes outputs of two steps are identical...
+    protected ArrayList<ArrayList<Integer>> loop(ArrayList<Integer> dataSet) {
+        ArrayList<Integer> swapped = new ArrayList<>();
 
         if (sortCounter < (dataSetSize-1)){
             if (swapCounter < (dataSetSize- sortCounter -1)){
                 if (dataSet.get(swapCounter) > dataSet.get(swapCounter +1)) {
                     addComparison();
-                    swap(dataSet, swapCounter, swapCounter +1);
+                    swapped = swap(dataSet, new ArrayList<>(Arrays.asList(swapCounter, swapCounter + 1)));
                 }
                 swapCounter++;
             }
@@ -39,6 +39,6 @@ public class BubbleSort extends LiveAlgorithm {
             }
         }
 
-        return dataSet;
+        return new ArrayList<>(Arrays.asList(dataSet, swapped));
     }
 }

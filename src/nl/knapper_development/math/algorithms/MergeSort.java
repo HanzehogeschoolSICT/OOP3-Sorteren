@@ -17,6 +17,7 @@ import jdk.nashorn.internal.ir.annotations.Ignore;
 import nl.knapper_development.math.LiveAlgorithm;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 @Deprecated
 public class MergeSort extends LiveAlgorithm {
@@ -32,7 +33,10 @@ public class MergeSort extends LiveAlgorithm {
     }
 
     @Override
-    protected ArrayList<Integer> loop(ArrayList<Integer> dataSet) {
+    @Ignore
+    protected ArrayList<ArrayList<Integer>> loop(ArrayList<Integer> dataSet) {
+        ArrayList<Integer> swapped = new ArrayList<>();
+
         if (stepCounter < (dataSet.size()) % 2) {
             if (working.size() < mergecounter) {
 
@@ -43,7 +47,7 @@ public class MergeSort extends LiveAlgorithm {
 
         }
 
-        return mergeAll();
+        return new ArrayList<>(Arrays.asList(dataSet, swapped));
     }
 
     private ArrayList<Integer> mergeAll() {

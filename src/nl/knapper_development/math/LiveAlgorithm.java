@@ -43,14 +43,16 @@ public abstract class LiveAlgorithm implements Runnable {
         this.observer = observer;
     }
 
-    protected abstract ArrayList<Integer> loop(ArrayList<Integer> dataSet);
+    protected abstract ArrayList<ArrayList<Integer>> loop(ArrayList<Integer> dataSet);
 
-    public void swap(ArrayList<Integer> dataSet, int pos1, int pos2){
-        int swap = dataSet.get(pos1);
-        dataSet.set(pos1, dataSet.get(pos2));
-        dataSet.set(pos2, swap);
+    public ArrayList<Integer> swap(ArrayList<Integer> dataSet, ArrayList<Integer> swappables) {
+        onPreSwap(dataSet, swappables);
 
-        onSwap(new Swap(pos1, pos2, pos2, pos1));
+        int swap = dataSet.get(swappables.get(0));
+        dataSet.set(swappables.get(0), dataSet.get(swappables.get(1)));
+        dataSet.set(swappables.get(1), swap);
+
+        return new ArrayList<>(swappables);
     }
 
     public boolean isSorted() {
@@ -68,8 +70,8 @@ public abstract class LiveAlgorithm implements Runnable {
     private void doStep() {
         onLoop();
         numberOfStepsTaken++;
-        ArrayList<Integer> loopResult = loop(this.dataSet);
-        onLoopDone(loopResult);
+        ArrayList<ArrayList<Integer>> loopResult = loop(this.dataSet);
+        onLoopDone(loopResult.get(0), loopResult.get(1));
         try {
             Thread.sleep(interval);
         } catch (InterruptedException e) {
@@ -116,6 +118,10 @@ public abstract class LiveAlgorithm implements Runnable {
         return numberOfStepsTaken;
     }
 
+    public void setDataSet(ArrayList<Integer> dataSet) {
+        this.dataSet = dataSet;
+    }
+
     public void setObserver(Observer observer) {
         this.observer = observer;
     }
@@ -128,12 +134,12 @@ public abstract class LiveAlgorithm implements Runnable {
         if (this.observer != null) this.observer.onLoop();
     }
 
-    private void onSwap(Swap swap) {
-        if (this.observer != null) this.observer.onSwap(swap);
+    private void onPreSwap(ArrayList<Integer> dataSet, ArrayList<Integer> swappables) {
+        if (this.observer != null) this.observer.onPreSwap(dataSet, swappables);
     }
 
-    private void onLoopDone(ArrayList<Integer> currentDataset) {
-        if (this.observer != null) this.observer.onLoopDone(currentDataset);
+    private void onLoopDone(ArrayList<Integer> currentDataset, ArrayList<Integer> changedIndexes) {
+        if (this.observer != null) this.observer.onLoopDone(currentDataset, changedIndexes);
     }
 
     private void onFinished(LiveAlgorithm liveAlgorithm) {
@@ -145,9 +151,9 @@ public abstract class LiveAlgorithm implements Runnable {
 
         void onLoop();
 
-        void onSwap(Swap swap);
+        void onPreSwap(ArrayList<Integer> dataSet, ArrayList<Integer> toBeSwapped);
 
-        void onLoopDone(ArrayList<Integer> currentDataset);
+        void onLoopDone(ArrayList<Integer> currentDataset, ArrayList<Integer> changedIndexes);
 
         void onFinished(LiveAlgorithm thisLiveAlgorithm);
 

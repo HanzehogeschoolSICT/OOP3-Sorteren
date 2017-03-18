@@ -3,6 +3,7 @@ package nl.knapper_development.math.algorithms;
 import nl.knapper_development.math.LiveAlgorithm;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Copyright (C) 3/8/17 By joris
@@ -37,12 +38,13 @@ public class InsertionSort extends LiveAlgorithm {
     }
 
     @Override
-    protected ArrayList<Integer> loop(ArrayList<Integer> dataSet) {
+    protected ArrayList<ArrayList<Integer>> loop(ArrayList<Integer> dataSet) {
+        ArrayList<Integer> swapped = new ArrayList<>();
 
         if (masterSortCounter < dataSetSize) {
             addComparison();
             if ((insertionCounter >= 0) && (dataSet.get(singleSortCounter) < dataSet.get(insertionCounter))) {
-                swap(dataSet, singleSortCounter, insertionCounter);
+                swapped = swap(dataSet, new ArrayList<>(Arrays.asList(singleSortCounter, insertionCounter)));
                 insertionCounter--;
                 singleSortCounter--;
             }
@@ -52,6 +54,6 @@ public class InsertionSort extends LiveAlgorithm {
                 insertionCounter = (masterSortCounter - 1);
             }
         }
-        return dataSet;
+        return new ArrayList<>(Arrays.asList(dataSet, swapped));
     }
 }

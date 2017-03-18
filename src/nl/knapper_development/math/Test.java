@@ -38,41 +38,43 @@ public class Test {
             }
 
             @Override
-            public void onLoopDone(ArrayList<Integer> currentDataset) {
-                System.out.println(currentDataset);
+            public void onPreSwap(ArrayList<Integer> dataSet, ArrayList<Integer> toBeSwapped) {
+                System.out.println("SWAP--CURRENT: " + dataSet + " SWAPPING: " + toBeSwapped);
+
             }
+
+            @Override
+            public void onLoopDone(ArrayList<Integer> currentDataset, ArrayList<Integer> changedIndexes) {
+                System.out.println("CURRENT: " + currentDataset + " CHANGED: " + changedIndexes);
+            }
+
 
             @Override
             public void onFinished(LiveAlgorithm thisAlgorithm) {
                 System.out.println("BS DONE, " + thisAlgorithm.getComparisons() + " comparisons, " + thisAlgorithm.getNumberOfStepsTaken() + " steps.\n----------");
             }
 
-            @Override
-            public void onSwap(Swap swap) {
-                System.out.println(swap.toString());
-            }
         });
 
-        QuickSort qs = new QuickSort(dataSet2, 0, new LiveAlgorithm.Observer() {
+        QuickSort qs = new QuickSort(dataSet2, 500, new LiveAlgorithm.Observer() {
             @Override
             public void onLoop() {
             }
 
             @Override
-            public void onLoopDone(ArrayList<Integer> currentDataset) {
-                System.out.println(currentDataset);
+            public void onPreSwap(ArrayList<Integer> dataSet, ArrayList<Integer> toBeSwapped) {
+                System.out.println("SWAP--CURRENT: " + dataSet + " SWAPPING: " + toBeSwapped);
 
+            }
+
+            @Override
+            public void onLoopDone(ArrayList<Integer> currentDataset, ArrayList<Integer> changedIndexes) {
+                System.out.println("CURRENT: " + currentDataset + " PIVOT: " + changedIndexes);
             }
 
             @Override
             public void onFinished(LiveAlgorithm thisAlgorithm) {
                 System.out.println("QS DONE, " + thisAlgorithm.getComparisons() + " comparisons, " + thisAlgorithm.getNumberOfStepsTaken() + " steps.\n----------");
-
-            }
-
-            @Override
-            public void onSwap(Swap swap) {
-                System.out.println(swap.toString());
 
             }
         });
@@ -85,25 +87,27 @@ public class Test {
             }
 
             @Override
-            public void onLoopDone(ArrayList<Integer> currentDataset) {
+            public void onPreSwap(ArrayList<Integer> dataSet, ArrayList<Integer> toBeSwapped) {
+                System.out.println("SWAP--CURRENT: " + dataSet + " SWAPPING: " + toBeSwapped);
 
-                System.out.println(currentDataset);
             }
+
+            @Override
+            public void onLoopDone(ArrayList<Integer> currentDataset, ArrayList<Integer> changedIndexes) {
+                System.out.println("CURRENT: " + currentDataset + " CHANGED: " + changedIndexes);
+            }
+
             @Override
             public void onFinished(LiveAlgorithm thisAlgorithm) {
                 System.out.println("IS DONE, " + thisAlgorithm.getComparisons() + " comparisons, " + thisAlgorithm.getNumberOfStepsTaken() + " steps.\n----------");
             }
 
-            @Override
-            public void onSwap(Swap swap) {
-                System.out.println(swap.toString());
-            }
         });
 
 
-        bs.run();
-        //qs.run();
-        is.run();
+        //bs.run();
+        qs.run();
+        //is.run();
     }
 
 }
